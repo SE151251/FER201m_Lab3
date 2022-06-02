@@ -34,8 +34,8 @@
 					<li class="nav-item"><a class="nav-link" href="#"><span class="fa fa-list fa-lg"></span> Menu</a></li>
 					<li class="nav-item"><a class="nav-link" href="./contactus.html"><span class="fa fa-address-card fa-lg"></span> Contact</a></li>
 				</ul> 
-				<span class="navbar-text ml-auto"><a data-toggle="modal" data-target="#loginModal">
-					<span class="fa fa-sign-in"></span> Login</a></span>
+				<span class="navbar-text ml-auto"><a>
+					<span id="loginShow" class="fa fa-sign-in"></span> Login</a></span>
 			</div>         
 		</div>
     </nav>
@@ -44,11 +44,11 @@
         <div class="modal-dialog modal-lg" role="content">
             <!-- Modal content-->
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header modal-head-show">
                     <h4 class="modal-title">Login </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modal-body-show">
                     <form>
                         <div class="form-row">
                             <div class="form-group col-sm-4">
@@ -89,8 +89,10 @@
                 </div>
                 <div class="col-12 col-sm align-self-center">
 					<!--<a role="button" class="btn btn-block btn-sm btn-warning" href="#">Reserve Table</a>-->
-					<a role="button" class="btn btn-block btn-sm btn-color" data-toggle="modal" 
-					href="#reserveform">Reserve Table</a>
+					<a role="button" class="btn btn-block nav-link btn-warning" data-toggle="tooltip" 
+                    data-html="true"  title="Or Call us at  <br><strong>+852 12345678</strong>" 
+                    data-placement="bottom"
+					id="tableShow">Reserve Table</a>
 
                 </div>
             </div>
@@ -149,6 +151,11 @@
                         <span class="carousel-control-prev-icon"></span></a>
                     <a class="carousel-control-next" href="#mycarousel" role="button" data-slide="next">
                         <span class="carousel-control-next-icon"></span></a>
+                        
+                        <button class="btn btn-danger btn-sm" id="carouselButton">
+                            <span id="carousel-button-icon" class="fa fa-pause"></span>
+                        </button>
+    
 				</div>
 			</div>
 		</div>
@@ -217,21 +224,19 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">       
 			<div class="card">
-				<div class="card-header btn-color text-white">
+				<div class="card-header modal-head-show text-white">
                     <div class="row justify-content-between">
                         <h2 class="col-4 align-self-center">Reverse a Table</h2>
-                        <label class="col-1 text-danger text-center h-100" data-dismiss="modal">
-                            <i style="font-size: large; line-height: 2.5; cursor: pointer;" class="fa fa-window-close-o h-100" data-dismiss="modal" aria-hidden="true"></i>
-                        </label>
+                        <button type="button" class="close mr-3" data-dismiss="modal">&times;</button>
                     </div>
                 </div>
-				<div class="card-body">
+				<div class="card-body modal-body-show">
 					<dl class="row">
 						<dd class="col-12 col-md-3">Number of Guests</dd>
 						<dd class="col-12 col-md-9">
-							<div class="form-check">
+							<div class="form-check p-0">
 								<label class="form-check-inline" for="radio1">
-									<input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" >1
+									<input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1">1
 								</label>
 								<label class="form-check-inline" for="radio2">
 									<input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">2
@@ -255,10 +260,10 @@
                                 <label class="col-12 col-sm-3">Section</label>
                                 <div class="col-12 col-sm-5 btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-success">
-                                        <input type="radio" name="options" checked> Non-smoking
+                                        <input type="radio" name="options" id="isSmoke" checked> Non-smoking
                                     </label>
                                     <label class="btn btn-danger">
-                                        <input type="radio" name="options"> Smoking
+                                        <input type="radio" name="options" id="isSmoke"> Smoking
                                     </label>
                                 </div>
                             </div>
@@ -341,6 +346,31 @@
     <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>	   
 
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();		
+			
+			$("#mycarousel").carousel( { interval: 2000 } );
+			$("#carouselButton").click(function(){
+                if ($("#carouselButton").children("span").hasClass('fa-pause')) {
+                    $("#mycarousel").carousel('pause');
+                    $("#carouselButton").children("span").removeClass('fa-pause');
+                    $("#carouselButton").children("span").addClass('fa-play');
+                }
+                else if ($("#carouselButton").children("span").hasClass('fa-play')){
+                    $("#mycarousel").carousel('cycle');
+                    $("#carouselButton").children("span").removeClass('fa-play');
+                    $("#carouselButton").children("span").addClass('fa-pause');                    
+                }
+            });
+			$("#tableShow").click(function(){
+                $('#reserveform').modal('show');
+            })
+            $("#loginShow").click(function(){
+                $('#loginModal').modal('show');
+            })
+        });
+    </script>
 </body>
 
 </html>
